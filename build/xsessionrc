@@ -1,0 +1,12 @@
+
+
+pids=$(pidof ibus-daemon || true)
+if [ ! -n "$pids" ];then 
+  export XMODIFIERS=@im=ibus
+  export GTK_IM_MODULE=ibus
+  export QT_IM_MODULE=ibus
+  #export LC_ALL=zh_TW.UTF-8
+  ibus-daemon -d 
+
+
+fi
