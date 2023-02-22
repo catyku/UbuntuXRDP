@@ -2,6 +2,8 @@
 
 FROM ubuntu:22.04
 
+MAINTAINER catyku https://blog.yslifes.com
+
 ENV DEBIAN_FRONTEND noninteractive
 
 
@@ -20,14 +22,6 @@ RUN apt-get install -y \
 
 RUN apt install software-properties-common -y
 
-#RUN add-apt-repository ppa:flatpak/stable
-
-#RUN apt update -y
-
-#RUN apt-get install -y  flatpak  gnome-software-plugin-flatpak 
-
-#RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 ## install firefox as web browser
 RUN add-apt-repository ppa:mozillateam/ppa
 
@@ -39,15 +33,14 @@ Pin-Priority: 1001\n\
 
 RUN echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' |  tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 
-#RUN apt -y update && apt -y upgrade
 
+# install chinese fonts
 RUN apt-get install -y language-pack-zh*  
 #chinese*
 RUN apt-get install -y fonts-arphic-ukai fonts-arphic-uming fonts-ipafont-mincho fonts-ipafont-gothic fonts-unfonts-core
 
-#RUN flatpak install -y flathub org.mozilla.firefox 
-#RUN apt install firefox 
 
+# install some tool and ibus ime
 RUN apt-get install -y \
     sudo \
     wget \
@@ -57,10 +50,6 @@ RUN apt-get install -y \
     dbus-x11 \
     ibus ibus-pinyin ibus-table-cangjie \
     nano tar 
-
-#RUN snap install firefox
-
-#RUN flatpak install -y flathub org.mozilla.firefox
 
 
 RUN  apt remove -y light-locker xscreensaver && \
@@ -82,6 +71,7 @@ RUN mkdir /var/run/dbus && \
     sed -i "s/xrdp\/xorg/xorg/g" /etc/xrdp/sesman.ini && \
     echo "xfce4-session" >> /etc/skel/.Xsession
 
+# real install firefox 
 RUN apt upgrade -y && apt update -y  && apt install firefox -y 
 
 # Docker config
